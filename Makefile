@@ -17,7 +17,7 @@ build:
 run:
 	docker run --name $(IMAGE_NAME) -d -p 1666:1666 -e P4D_PASSWORD=default_password $(IMAGE_NAME):$(TAG) 
 
-push:
+push: build
 	docker tag $(IMAGE_NAME):$(TAG) $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(TAG)
 	docker push $(DOCKER_REGISTRY)/$(IMAGE_NAME):$(TAG)
 
