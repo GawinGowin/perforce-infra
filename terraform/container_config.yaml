@@ -1,7 +1,7 @@
 spec:
   containers:
   - name: instance-20240604-082923
-    image: perforce-server/x-tech-perforce
+    image: asia-northeast1-docker.pkg.dev/vivid-willow-381410/perforce-server/x-tech-perforce
     volumeMounts:
     - name: host-path-0
       readOnly: false
