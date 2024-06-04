@@ -8,7 +8,7 @@ TAG := latest
 
 DOCKER_REGISTRY := $(LOCATION)-docker.pkg.dev/$(PROJECT_ID)/$(REPONAME)
 
-all:
+apply:
 	cd terraform && terraform apply --auto-approve
 
 build:
