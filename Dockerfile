@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y helix-p4d
 
-COPY entrypoint.sh /tmp/entrypoint.sh
-RUN chmod +x /tmp/entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/tmp/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
