@@ -2,6 +2,10 @@ FROM ubuntu:focal
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ENV PORT=1666
+ENV P4D_PASSWORD=default_password
+ENV P4D_ROOT=/opt/perforce/servers/master
+
 RUN apt-get update && \
     apt-get install -y wget gnupg && \
     wget -qO - https://package.perforce.com/perforce.pubkey | gpg --dearmor -o /usr/share/keyrings/perforce.gpg && \
