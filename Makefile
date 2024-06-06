@@ -4,12 +4,12 @@ PROJECT_ID := vivid-willow-381410
 REPONAME := perforce-server
 
 IMAGE_NAME := x-tech-perforce
-TAG := latest
+TAG := 1.0.5
 
 DOCKER_REGISTRY := $(LOCATION)-docker.pkg.dev/$(PROJECT_ID)/$(REPONAME)
 
 apply:
-	cd terraform && terraform apply --auto-approve
+	cd terraform && terraform apply --auto-approve -var="image_tag=$(TAG)"
 
 build:
 	docker build . --file Dockerfile -t $(IMAGE_NAME):$(TAG)

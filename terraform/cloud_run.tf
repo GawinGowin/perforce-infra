@@ -2,6 +2,10 @@ locals {
   secret_id = "projects/${data.google_project.project.number}/secrets/perforce-root-pw"
 }
 
+variable "image_tag" {
+	type = string
+  	default = "latest"
+}
 
 resource "google_cloud_run_v2_service" "default" {
 	name     = "${var.instance_name}-srv"
@@ -11,7 +15,7 @@ resource "google_cloud_run_v2_service" "default" {
 	template {
 		containers {
 			name = "perforce"
-			image = "asia-northeast1-docker.pkg.dev/vivid-willow-381410/perforce-server/x-tech-perforce"
+			image = "asia-northeast1-docker.pkg.dev/vivid-willow-381410/perforce-server/x-tech-perforce:1.0.5"
 			ports {
 				container_port = 1666
 			}
