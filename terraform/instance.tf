@@ -1,3 +1,13 @@
+variable "image_tag" {
+	type = string
+  default = "latest"
+}
+
+variable "container" {
+  type = string
+  default = "asia-northeast1-docker.pkg.dev/vivid-willow-381410/perforce-server/x-tech-perforce"
+}
+
 resource "google_compute_instance" "perforce-server" {
   name         = var.instance_name
   machine_type = "e2-micro"
@@ -9,7 +19,7 @@ resource "google_compute_instance" "perforce-server" {
 
     initialize_params {
       image = "projects/cos-cloud/global/images/cos-101-17162-463-29"
-      size  = 50
+      size  = 10
       type  = "pd-balanced"
     }
     mode = "READ_WRITE"
@@ -35,7 +45,28 @@ resource "google_compute_instance" "perforce-server" {
   }
   metadata = {
     created_by = "terraform"
-    gce-container-declaration = file("${var.container_config_path}")
+    gce-container-declaration = <<-EOT
+      spec:
+        containers:
+        - name: perforce-server
+          image: ${var.container}:${var.image_tag}
+          volumeMounts:
+          - name: perforce-data
+            readOnly: false
+            mountPath: /opt/perforce/servers
+          securityContext:
+            privileged: true
+          stdin: false
+          tty: false
+        volumes:
+        - name: perforce-data
+          gcePersistentDisk:
+            pdName: ${google_compute_disk.default.name}
+            fsType: ext4
+            partition: 0
+            readOnly: false
+        restartPolicy: Always
+      EOT
   }
   attached_disk {
     source      = google_compute_disk.default.id
@@ -49,7 +80,7 @@ resource "google_compute_disk" "default" {
   name = "perforce-data"
   type = "pd-standard"
   zone = "asia-northeast1-a"
-  size = "30"
+  size = "40"
 }
 
 resource "google_compute_address" "perforce_ip" {
