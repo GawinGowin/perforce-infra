@@ -30,11 +30,11 @@ resource "google_cloud_run_v2_service" "default" {
 			}
 			env {
 				name = "P4D_ROOT"
-				value = "/p4-data"
+				value = "/opt/perforce/servers/master"
 			}
 			volume_mounts {
 				name = "perforce-volume"
-				mount_path = "/p4-data"
+				mount_path = "/opt/perforce/servers/master"
 			}
 			resources {
 				limits = {
