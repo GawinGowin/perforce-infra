@@ -80,7 +80,7 @@ resource "google_compute_disk" "default" {
   name = "perforce-data"
   type = "pd-standard"
   zone = "asia-northeast1-a"
-  size = "40"
+  size = 40
 }
 
 resource "google_compute_address" "perforce_ip" {
