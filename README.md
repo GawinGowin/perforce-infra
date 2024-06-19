@@ -20,7 +20,8 @@ make push
   ```
   make apply
   ```
-  2. パスワードがデフォルトのままなのでコンパネで修正
+  2. **スーパーユーザーのパスワードがデフォルトのままなので適宜修正**
+
 - 削除
 ```
 cd terraform && terraform destroy
