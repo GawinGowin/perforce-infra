@@ -35,3 +35,7 @@ output "project" {
 output "project_number" {
   value = data.google_project.project.number
 }
+
+output "ipaddress" {
+  value = google_compute_address.perforce_ip.address
+}
