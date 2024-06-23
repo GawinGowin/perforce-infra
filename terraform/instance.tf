@@ -10,7 +10,7 @@ variable "container" {
 
 resource "google_compute_instance" "perforce-server" {
   name         = var.instance_name
-  machine_type = "e2-micro"
+  machine_type = "e2-highmem-2"
   zone         = "asia-northeast1-a"
 
   boot_disk {
@@ -73,6 +73,7 @@ resource "google_compute_instance" "perforce-server" {
     device_name = google_compute_disk.default.name
 	mode = "READ_WRITE"
   }
+  allow_stopping_for_update = true
   tags = [var.instance_name]
 }
 
