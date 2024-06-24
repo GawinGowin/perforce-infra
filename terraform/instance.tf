@@ -10,13 +10,11 @@ variable "container" {
 
 resource "google_compute_instance" "perforce-server" {
   name         = var.instance_name
-  machine_type = "e2-highmem-2"
+  machine_type = "e2-standard-2"
   zone         = "asia-northeast1-a"
-
   boot_disk {
     auto_delete = true
     device_name = "instance-20240604-073929"
-
     initialize_params {
       image = "projects/cos-cloud/global/images/cos-101-17162-463-29"
       size  = 10
@@ -24,14 +22,12 @@ resource "google_compute_instance" "perforce-server" {
     }
     mode = "READ_WRITE"
   }
-
   network_interface {
     network = "default"
     access_config {
       nat_ip = google_compute_address.perforce_ip.address
     }
   }
-
   service_account {
     email  = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
     scopes = [
@@ -71,7 +67,7 @@ resource "google_compute_instance" "perforce-server" {
   attached_disk {
     source      = google_compute_disk.default.id
     device_name = google_compute_disk.default.name
-	mode = "READ_WRITE"
+    mode = "READ_WRITE"
   }
   allow_stopping_for_update = true
   tags = [var.instance_name]
@@ -93,12 +89,10 @@ resource "google_compute_firewall" "perforce-firewall" {
   name    = "${var.instance_name}-vpc-firewall"
   network = "default"
   project = data.google_client_config.default.project
-
   allow {
     protocol  = "tcp"
     ports    = ["1666"]
   }
-
   direction = "INGRESS"
   target_tags = [var.instance_name]
   source_ranges = ["0.0.0.0/0"]
