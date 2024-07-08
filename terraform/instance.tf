@@ -10,7 +10,7 @@ variable "container" {
 
 resource "google_compute_instance" "perforce-server" {
   name         = var.instance_name
-  machine_type = "e2-standard-2"
+  machine_type = "e2-medium"
   zone         = "asia-northeast1-a"
 
   boot_disk {

@@ -11,6 +11,9 @@ DOCKER_REGISTRY := $(LOCATION)-docker.pkg.dev/$(PROJECT_ID)/$(REPONAME)
 apply:
 	cd terraform && terraform apply --auto-approve -var="image_tag=$(TAG)" -var="container=$(DOCKER_REGISTRY)/$(IMAGE_NAME)"
 
+plan:
+	cd terraform && terraform plan -var="image_tag=$(TAG)" -var="container=$(DOCKER_REGISTRY)/$(IMAGE_NAME)"
+
 build:
 	docker build . --file Dockerfile -t $(IMAGE_NAME):$(TAG)
 
